@@ -28,8 +28,8 @@ const OrderBookTable = ({ rows, side }: { rows: OrderBookLevel[], side: 'buy' | 
         {rows.map(([price, size, total]) => {
           const depth = maxTotal > 0 ? (parseFloat(total) / maxTotal) * 100 : 0;
           return (
-            <TableRow key={price} className="relative font-code text-sm h-7">
-              <TableCell className={cn("py-0 z-10", side === 'buy' ? 'text-green-400 pl-8' : 'text-red-400 pr-8 text-right')}>{price}</TableCell>
+            <TableRow key={`${price}-${size}`} className="relative font-code text-sm h-7">
+              <TableCell className={cn("py-0 z-10", side === 'buy' ? 'text-green-400 pl-8' : 'pr-8 text-right')}>{price}</TableCell>
               <TableCell className="py-0 text-right z-10">{size}</TableCell>
               <TableCell className="py-0 text-right pr-2 z-10 relative">
                 {total}
