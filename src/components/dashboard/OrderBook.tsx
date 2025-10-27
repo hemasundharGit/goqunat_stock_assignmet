@@ -31,14 +31,16 @@ const OrderBookTable = ({ rows, side }: { rows: OrderBookLevel[], side: 'buy' | 
             <TableRow key={price} className="relative font-code text-sm h-7">
               <TableCell className={cn("py-0 z-10", side === 'buy' ? 'text-green-400 pl-8' : 'text-red-400 pr-8 text-right')}>{price}</TableCell>
               <TableCell className="py-0 text-right z-10">{size}</TableCell>
-              <TableCell className="py-0 text-right pr-2 z-10">{total}</TableCell>
-              <div
-                className={cn(
-                  "absolute top-0 h-full -z-0 transition-all duration-300",
-                  side === 'buy' ? "right-0 bg-green-900/40" : "left-0 bg-red-900/40"
-                )}
-                style={{ width: `${depth}%` }}
-              />
+              <TableCell className="py-0 text-right pr-2 z-10 relative">
+                {total}
+                <div
+                  className={cn(
+                    "absolute top-0 h-full -z-10 transition-all duration-300",
+                    side === 'buy' ? "right-0 bg-green-900/40" : "left-0 bg-red-900/40"
+                  )}
+                  style={{ width: `${depth}%` }}
+                />
+              </TableCell>
             </TableRow>
           );
         })}
