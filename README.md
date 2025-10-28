@@ -4,6 +4,9 @@ OrderStream is a high-fidelity, client-side simulation of a real-time cryptocurr
 
 This project was built with Next.js and React, and showcases a reactive UI that allows users to place orders and observe market activity in real-time.
 
+- **[System Architecture & Design Documentation](BONUS_FEATURES.md)**
+- **[Bonus Features & Advanced Implementations](BONUS_FEATURES.md)**
+
 ## Features
 
 - **Real-time Order Book:** View buy (bids) and sell (asks) orders, aggregated by price level and updated live.
@@ -15,6 +18,7 @@ This project was built with Next.js and React, and showcases a reactive UI that 
   - **Immediate-Or-Cancel (IOC):** Fill what you can immediately and cancel the rest.
   - **Fill-Or-Kill (FOK):** Execute the entire order immediately or cancel it completely.
 - **Simulated Market Activity:** The engine automatically generates random market orders to create a dynamic and interactive trading environment.
+- **Order Book Depth Visualization:** The UI includes a visual indicator to show the cumulative depth at different price levels, making it easier to gauge market sentiment.
 
 ## Tech Stack
 
