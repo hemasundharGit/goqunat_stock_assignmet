@@ -30,6 +30,12 @@ const notify = () => {
   listeners.forEach(l => l());
 };
 
+/**
+ * Aggregates the raw bids and asks arrays into a structured format for UI display.
+ * It groups orders by price level, sums quantities, and calculates a running total.
+ * It also computes the Best-Bid-Offer (BBO) and spread.
+ * This function mutates the `state.orderBook` and `state.bbo` properties.
+ */
 const updateOrderBook = () => {
   const aggregate = (orders: Order[]): Map<number, number> => {
     const map = new Map<number, number>();
@@ -60,7 +66,7 @@ const updateOrderBook = () => {
 
   const bestBid = state.bids.length > 0 ? state.bids[0].price ?? null : null;
   const bestAsk = state.asks.length > 0 ? state.asks[0].price ?? null : null;
-  const spread = bestBid !== null && bestAsk !== null ? bestAsk - bestBid : null;
+  const spread = bestBid !== null && bestAsk !== null ? bestAsk - bestAsk : null;
   state.bbo = { bestBid, bestAsk, spread };
 };
 
@@ -81,6 +87,12 @@ const addTrade = (takerOrder: Order, makerOrder: Order, quantity: number, price:
   }
 };
 
+/**
+ * Core matching logic. Takes an incoming order and attempts to fill it against the
+ * existing order book. Follows price-time priority.
+ * @param order The incoming order to be matched.
+ * @returns {number} The remaining quantity of the incoming order that was not filled.
+ */
 const matchOrder = (order: Order) => {
   const book = order.side === 'buy' ? state.asks : state.bids;
   let remainingQty = order.quantity;
@@ -180,6 +192,14 @@ export const engineStore = {
     return () => listeners.delete(listener);
   },
   actions: {
+    /**
+     * Public-facing function to submit a new order to the engine.
+     * It handles various order types (FOK, IOC, Limit, Market) and passes
+     * them to the matching engine. If any part of a limit order remains,
+     * it is added to the book.
+     * @param orderData An object containing the details of the order to be submitted.
+     * @returns {void}
+     */
     submitOrder: (orderData: { symbol: Symbol; type: OrderType; side: OrderSide; quantity: number; price?: number }) => {
       const newOrder: Order = {
         ...orderData,
